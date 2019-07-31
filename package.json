@@ -1,0 +1,38 @@
+{
+    "name": "validationform",
+    "version": "1.0.0",
+    "description": "Validate Redux-Form informations and return all errors.",
+    "license": "UNLICENSED",
+    "scripts": {
+        "prelint": "prettier --check \"src/**/*.ts\"",
+        "lint": "eslint \"./src/**\" && tsc ",
+        "lint:fix": "eslint --fix \"./src/**\" && tsc",
+        "docs": "typedoc --out docs ./src --exclude \"**/*.test.ts\"",
+        "format": "prettier --write \"src/**/*.ts\"",
+        "start": "yarn test",
+        "build": "tsc -p tsconfig.build.json",
+        "postbuild": "dts-bundle --main build/validation.d.ts --name Validation",
+        "test": "jest --detectOpenHandles"
+    },
+    "main": "build/index.js",
+    "types": "build/index.d.js",
+    "devDependencies": {
+        "@types/jest": "^24.0.16",
+        "@typescript-eslint/parser": "^1.13.0",
+        "dts-bundle": "^0.7.3",
+        "eslint": "^5.3.0",
+        "eslint-config-airbnb-base": "^13.2.0",
+        "eslint-plugin-import": "^2.17.2",
+        "husky": "^3.0.2",
+        "jest": "^24.8.0",
+        "prettier": "^1.18.2",
+        "ts-jest": "^24.0.2",
+        "typedoc": "^0.15.0",
+        "typescript": "^3.5.3"
+    },
+    "husky": {
+        "hooks": {
+            "pre-commit": "yarn lint"
+        }
+    }
+}
