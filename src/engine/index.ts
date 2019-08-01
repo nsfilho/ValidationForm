@@ -1,4 +1,5 @@
 import * as string from './string';
+import * as number from './number';
 import * as general from './general';
 
 export interface Engine {
@@ -10,8 +11,17 @@ export interface Engine {
         maxSize: (size: number) => Engine;
         regex: (reg: RegExp, errorMessage?: string) => Engine;
     };
+    number: {
+        isNumber: () => Engine;
+        isInteger: () => Engine;
+        isLessThan: (value: number) => Engine;
+        isGreatherThan: (value: number) => Engine;
+        isFloat: () => Engine;
+        isEqual: (value: number) => Engine;
+    };
     isNull: DeepEngine;
     isDefined: DeepEngine;
+    isRequired: DeepEngine;
     not: {
         isNull: DeepEngine;
         isDefined: DeepEngine;
@@ -27,16 +37,26 @@ export const validation = (value: any): Engine => {
         passed: [],
         errors: []
     };
+    const f: Engine = v as Engine;
     v.string = {
-        minSize: string.minSize.bind(v),
-        maxSize: string.maxSize.bind(v),
-        regex: string.regex.bind(v)
+        minSize: string.minSize(f),
+        maxSize: string.maxSize(f),
+        regex: string.regex(f)
     };
-    v.isNull = general.isNull.bind(v);
-    v.isDefined = general.isDefined.bind(v);
+    v.number = {
+        isNumber: number.isNumber(f),
+        isInteger: number.isInteger(f),
+        isLessThan: number.isLessThan(f),
+        isGreatherThan: number.isGreatherThan(f),
+        isFloat: number.isFloat(f),
+        isEqual: number.isEqual(f)
+    };
+    v.isNull = general.isNull(f);
+    v.isDefined = general.isDefined(f);
+    v.isRequired = general.isRequired(f);
     v.not = {
-        isNull: general.isNotNull.bind(v),
-        isDefined: general.isNotDefined.bind(v)
+        isNull: general.isNotNull(f),
+        isDefined: general.isNotDefined(f)
     };
-    return v as Engine;
+    return f;
 };

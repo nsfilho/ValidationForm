@@ -1,37 +1,37 @@
 import { DeepEngine, Engine } from './index';
+import { txt } from '../locale';
 
-export function isNull() {
-    // @ts-ignore
-    const that: Engine = this;
+export const isNull = (that: Engine) => () => {
     that.value === null
         ? that.passed.push('isNull')
-        : that.errors.push(`the ${that.value} is not null`);
+        : that.errors.push(txt('general.isNull.errorMsg'));
     return that;
-}
+};
 
-export function isDefined() {
-    // @ts-ignore
-    const that: Engine = this;
+export const isDefined = (that: Engine) => () => {
     that.value !== undefined
         ? that.passed.push('isDefined')
-        : that.errors.push(`the ${that.value} is not defined`);
+        : that.errors.push(txt('general.isDefined.errorMsg'));
     return that;
-}
+};
 
-export function isNotNull() {
-    // @ts-ignore
-    const that: Engine = this;
+export const isRequired = (that: Engine) => () => {
+    that.value !== undefined && that.value !== null
+        ? that.passed.push('isRequired')
+        : that.errors.push(txt('general.isRequired.errorMsg'));
+    return that;
+};
+
+export const isNotNull = (that: Engine) => () => {
     that.value !== null
         ? that.passed.push('isNotNull')
-        : that.errors.push(`the ${that.value} is null`);
+        : that.errors.push(txt('general.isNotNull.errorMsg'));
     return that;
-}
+};
 
-export function isNotDefined() {
-    // @ts-ignore
-    const that: Engine = this;
+export const isNotDefined = (that: Engine) => () => {
     that.value === undefined
         ? that.passed.push('isNotDefined')
-        : that.errors.push(`the ${that.value} is defined`);
+        : that.errors.push(txt('general.isNotDefined.errorMsg'));
     return that;
-}
+};

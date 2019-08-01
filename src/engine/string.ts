@@ -1,37 +1,31 @@
 import { Engine } from './index';
 
-export function minSize(size: number): Engine {
-    // @ts-ignore
-    const that: Engine = this; // eslint-disable-line
+export const minSize = (that: Engine) => (size: number): Engine => {
     if (typeof that.value !== 'string')
-        throw new Error('The value is not a string');
+        throw new Error('string.minSize.typeErrorMsg');
     that.value.length >= size
-        ? that.passed.push(`minSize>=${size}`)
-        : that.errors.push(`the ${that.value} length is shorter than ${size}.`);
+        ? that.passed.push(`string.minSize.passedMsg`)
+        : that.errors.push(`string.minSize.lengthError`);
     return that;
-}
+};
 
-export function maxSize(size: number): Engine {
-    // @ts-ignore
-    const that: Engine = this;
+export const maxSize = (that: Engine) => (size: number): Engine => {
     if (typeof that.value !== 'string')
-        throw new Error('The value is not a string');
+        throw new Error('string.maxSize.typeErrorMsg');
     that.value.length <= size
-        ? that.passed.push(`maxSize<=${size}`)
+        ? that.passed.push(`string.maxSize.passedMsg`)
         : that.errors.push(
               `the ${that.value} length is greather than ${size}.`
           );
     return that;
-}
+};
 
-export function regex(
+export const regex = (that: Engine) => (
     value: RegExp,
     errorMessage: string = 'the value is not valid.'
-): Engine {
-    // @ts-ignore
-    const that: Engine = this;
+): Engine => {
     value.test(that.value as string)
         ? that.passed.push(`regex: ${String(value)}`)
         : that.errors.push(errorMessage);
     return that;
-}
+};
