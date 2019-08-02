@@ -43,7 +43,6 @@ describe('Basic Tests', () => {
                 /^[a-z]+$/,
                 'A string não está formatada corretamente.'
             );
-        console.log(results.errors);
         expect(results.errors.length).toBe(2);
     });
 });
@@ -58,15 +57,11 @@ describe('Number Tests', () => {
         expect(results.errors.length).toBe(1);
     });
     it('isLessThan', () => {
-        const results = validation(4).number.isLessThan(5);
-        expect(results.errors.length).toBe(1);
-    });
-    it('isLessThan', () => {
-        const results = validation(4).number.isLessThan(5);
+        const results = validation(5).number.isLessThan(4);
         expect(results.errors.length).toBe(1);
     });
     it('isGreather', () => {
-        const results = validation(5).number.isGreatherThan(4);
+        const results = validation(4).number.isGreatherThan(5);
         expect(results.errors.length).toBe(1);
     });
     it('isFloat', () => {
@@ -82,8 +77,8 @@ describe('Number Tests', () => {
 describe('Language Tests', () => {
     it('English', () => {
         setLanguage('en_US');
-        const results = validation('myValue').isNull();
-        expect(results.errors[0]).toBe('The value specified is not null.');
+        const results = validation(0.1).number.isFloat();
+        expect(results.passed[0]).toBe('The value accepted');
     });
     it('Portuguese', () => {
         setLanguage('pt_BR');
